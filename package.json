@@ -1,0 +1,22 @@
+{
+  "name": "netflix-tracker",
+  "version": "1.0.0",
+  "description": "Keep track of how much of your life you spend on Netflix",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terriburns/Netflix-Tracker.git"
+  },
+  "author": "Terri Burns",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/terriburns/Netflix-Tracker/issues"
+  },
+  "homepage": "https://github.com/terriburns/Netflix-Tracker#readme",
+  "dependencies": {
+    "mongoose": "^4.4.11"
+  }
+}

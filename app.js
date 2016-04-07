@@ -11,7 +11,7 @@ app.set('view engine', 'hbs');
 
 //landing page
 app.get('/', function(req, res){
-  res.render('/main');
+  res.render('main');
 });
 
 //if user goes to sign up, store info, redirect to shows page

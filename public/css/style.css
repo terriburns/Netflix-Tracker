@@ -1,0 +1,26 @@
+.btn {
+  background-color:red;
+  font-color:white;
+  text-align:center;
+}
+
+.btn:hover {
+  background: green;
+}
+
+.btn-group {
+  width: 10%;
+  margin: 0 auto;
+}
+
+h1 {
+  color: red;
+  font-family: 'Lato';
+  font-size:80px;
+  font-weight: 200;
+  text-align:center;
+}
+
+body {
+  background-color: black;
+}

@@ -1,10 +1,6 @@
 #Netflix-Tracker
 
-A very important webapp.
-
-#Overview
-
-For many people, Netflix is a quintessential part of living. With this webapp, you can keep track of how much of your life you spend on Netflix.
+Keep track of how much of your life is spent on Netflix.
 
 Learn:
 
@@ -35,6 +31,8 @@ Learn:
 - Using Mongoose to store data. Minimally, will have to store Users, and Shows. See `db.js` for tentative schemas.
 
 #Wireframes
+
+![](public/imgs/screenshot.png)
 
 #Site Map 
 

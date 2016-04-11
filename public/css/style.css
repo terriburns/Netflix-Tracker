@@ -1,4 +1,4 @@
-.btn {
+.btn, input[type=submit]  {
   background-color:red;
   border:none;
   display: block;
@@ -43,6 +43,25 @@ h2 {
   color:white;
   font-family: 'Lato';
   font-size:22px;
+  line-height:50px;
+  text-align:center;
+}
+
+h3{
+  color:white;
+  font-family: 'Lato';
+  font-size:30px;
+  text-align:center;
+}
+
+input[type=text]{
+  background-color:red;
+  border:none;
+  display: inline;
+  font-family: 'Lato';
+  font-size:12px;
+  height: 25px;
+  margin: 0 auto;
   text-align:center;
 }
 

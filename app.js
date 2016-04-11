@@ -41,7 +41,7 @@ app.post('/login', function(req, res){
 });
 
 //see the shows + data
-app.get('/shows', function(req, rest){
+app.get('/shows', function(req, res){
   res.render('shows');
 });
 

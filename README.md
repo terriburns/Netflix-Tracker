@@ -6,7 +6,7 @@ Learn:
 
 - What percentage of your time on Netflix is watching which specific shows.
 
-- What percentage of your life you spend on Netlix in general.
+- What percentage of your life you spend on Netflix in general.
 
 - What percentage of your life you spend watching a specific show.
 

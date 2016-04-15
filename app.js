@@ -2,11 +2,17 @@ var express = require('express');
 var app = express();
 var path = require("path");
 var db = require('./db');
+var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Show = mongoose.model('Show');
 var User = mongoose.model('User');
 
-//set up handlebars
+//bodyParser
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+
+ //set up handlebars
 app.set('view engine', 'hbs');
 
 //landing page
@@ -40,9 +46,20 @@ app.post('/login', function(req, res){
   //if the information is the same as what's store in the database, redirect to shows with current user info
 });
 
-//see the shows + data
+//see the shows + data & route handler that calls Show.find
 app.get('/shows', function(req, res){
-  res.render('shows');
+  /*
+  var total = 0;
+  for(var i=0; i < shows.length; i++){
+    total += (req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength);
+  }
+  //times spent watching current show
+  totalForCurrentShow = req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength;
+  netflixPercentage = totalForCurrentShow/total;
+  */
+  Show.find(function(err, shows, count){
+    res.render('shows', {shows: shows});
+  });
 });
 
 //add a new show, store info, redirect to shows page
@@ -51,12 +68,14 @@ app.get('/shows/add', function(req, res){
 });
 app.post('/shows/add', function(req, res){
   var show = req.body.showTitle;
-  var episode = req.body.episodeNumber;
+  var seasons = req.body.seasonNumber;
+  var episodes = req.body.episodeNumber;
   var length = req.body.episodeLength;
   var newShow = new Show({
     title: show,
-    totalNumberOfEpisodesWatched: episode,
-    length: averageLengthOfEpisode
+    totalNumberOfSeasonsWatched: seasons,
+    totalNumberOfEpisodesPerSeason: episodes,
+    averageLengthOfEpisode: length
   }).save(function(err, newentry, c){
     res.redirect('/shows');
   });

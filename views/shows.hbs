@@ -1,21 +1,31 @@
 <h3>
   <u>
-    Your show stats
+    Your show stats:<br>
   </u>
+    {{#each shows}}
+    <tr>
+      <td>{{title}}</td>
+    </tr>
+    {{/each}}
 </h3>
 <h2>
-  Percentage of your life spent on Netflix:
+  Percentage of your life spent on Netflix:<br>
+  [completed after user authentication]
+  <form method = "GET" align="center">
+  <input type="text" name = "lifeNetflixPercentage">
 </h2>
 <h2>
   Percentage of your life spent watching:
-  <form method = "POST" align="center">
-  <input type="text" name = "filter">
+  [completed after user authentication]
+  <form method = "GET" align="center">
+  <input type="text" name = "lifePercentage">
 </h2>
 <h2>
   Percentage of your time on Netflix spent watching:
-  <form method = "POST" align="center">
-  <input type="text" name = "filter">
+  <form method = "GET" align="center">
+  <input type="text" name = "netflixPercentage">
 </h2>
+
 <form method="GET" action = "/shows/add">
   <button class="btn" type="button" name="signup" value ="">A D D   S H O W</button>
 </form>

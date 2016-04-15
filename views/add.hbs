@@ -1,9 +1,9 @@
-<form method = "GET" action = "/shows" align="center">
+<form method = "POST" action = "/shows/add" align="center">
   <h2>
-    NAME OF SHOW: <input type="text" name="name"><br>
-    TOTAL NUMBER OF SEASONS WATCHED: <input type="text" name="password"><br>
-    NUMBER OF EPISODES PER SEASON: <input type="text" name="password"><br>
-    AVERAGE LENGTH OF EPISODE: <input type="text" name="password"><br>
+    NAME OF SHOW: <input type="text" name="showTitle"><br>
+    TOTAL NUMBER OF SEASONS WATCHED: <input type="text" name="seasonNumber"><br>
+    NUMBER OF EPISODES PER SEASON: <input type="text" name="episodeNumber"><br>
+    AVERAGE LENGTH OF EPISODE (minutes): <input type="text" name="episodeLength"><br>
   </h2>
   <input type="submit" name = "filter">
 </form>

@@ -1,79 +1,68 @@
-.btn, input[type=submit]  {
-  background-color:red;
-  border:none;
+.btn,
+input[type=submit] {
+  background-color: red;
+  border: none;
   display: block;
   font-family: 'Lato';
-  font-size:30px;
+  font-size: 30px;
   height: 70px;
   margin: 0 auto;
-  text-align:center;
+  text-align: center;
   width: 335px;
 }
-
 .btn:hover {
   background: white;
 }
-
-.btn-group {
+a {
+  color: red;
+  text-decoration: underline;
 }
-
-a{
-  color:red;
-  text-decoration:underline;
-}
-
 a:hover {
-  color:red;
+  color: red;
 }
-
 body {
   background-color: black;
 }
-
 h1 {
   color: red;
   font-family: 'Lato';
-  font-size:80px;
+  font-size: 80px;
   font-weight: 200;
   line-height: 20%;
-  text-align:center;
+  text-align: center;
 }
-
 h2 {
-  color:white;
+  color: white;
   font-family: 'Lato';
-  font-size:22px;
-  line-height:50px;
-  text-align:center;
+  font-size: 22px;
+  line-height: 50px;
+  text-align: center;
 }
-
-h3{
-  color:white;
+h3 {
+  color: white;
   font-family: 'Lato';
-  font-size:30px;
-  text-align:center;
+  font-size: 30px;
+  text-align: center;
 }
-
-input[type=text]{
-  background-color:red;
-  border:none;
+input[type=text] {
+  background-color: red;
+  border: none;
   display: inline;
   font-family: 'Lato';
-  font-size:12px;
+  font-size: 12px;
   height: 25px;
   margin: 0 auto;
-  text-align:center;
+  text-align: center;
 }
-
 footer {
   bottom: 0;
-  color:white;
+  color: white;
   font-family: 'Lato';
-  font-size:18px;
+  font-size: 18px;
   height: 100px;
   left: 0;
-  overflow:hidden;
+  overflow: hidden;
   position: absolute;
-  text-align:center;
+  text-align: center;
   width: 100%;
 }

@@ -5,7 +5,8 @@ var Show = new mongoose.Schema({
   title: String,
   totalNumberOfSeasonsWatched: Number,
   totalNumberOfEpisodesPerSeason: Number,
-  averageLengthOfEpisode: Number
+  averageLengthOfEpisode: Number,
+  netflixPercentage: Number
 });
 
 var User = new mongoose.Schema({

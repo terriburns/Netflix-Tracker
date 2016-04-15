@@ -48,15 +48,6 @@ app.post('/login', function(req, res){
 
 //see the shows + data & route handler that calls Show.find
 app.get('/shows', function(req, res){
-  /*
-  var total = 0;
-  for(var i=0; i < shows.length; i++){
-    total += (req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength);
-  }
-  //times spent watching current show
-  totalForCurrentShow = req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength;
-  netflixPercentage = totalForCurrentShow/total;
-  */
   Show.find(function(err, shows, count){
     res.render('shows', {shows: shows});
   });
@@ -67,6 +58,14 @@ app.get('/shows/add', function(req, res){
   res.render('add');
 });
 app.post('/shows/add', function(req, res){
+  var total = 0;
+  for(var i=0; i < 'shows'.length; i++){
+    //NEED TO SPECIFY THE REQUEST FOR EACH INDIVIDUAL SHOW
+    total += (req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength);
+  }
+  //times spent watching current show
+  var totalForCurrentShow = req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength;
+  var num = (totalForCurrentShow/total) * 100;
   var show = req.body.showTitle;
   var seasons = req.body.seasonNumber;
   var episodes = req.body.episodeNumber;
@@ -75,7 +74,8 @@ app.post('/shows/add', function(req, res){
     title: show,
     totalNumberOfSeasonsWatched: seasons,
     totalNumberOfEpisodesPerSeason: episodes,
-    averageLengthOfEpisode: length
+    averageLengthOfEpisode: length,
+    netflixPercentage: num
   }).save(function(err, newentry, c){
     res.redirect('/shows');
   });

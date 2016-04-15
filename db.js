@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 //schemas
 var Show = new mongoose.Schema({
   title: String,
-  totalNumberOfEpisodesWatched: Number,
+  totalNumberOfSeasonsWatched: Number,
+  totalNumberOfEpisodesPerSeason: Number,
   averageLengthOfEpisode: Number
 });
 
@@ -14,4 +15,4 @@ var User = new mongoose.Schema({
 
 mongoose.model('Show', Show);
 mongoose.model('User', User);
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/netflix');

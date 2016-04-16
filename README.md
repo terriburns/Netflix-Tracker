@@ -1,5 +1,7 @@
 #Netflix-Tracker
 
+To run: `node app.js`
+
 Keep track of how much of your life is spent on Netflix.
 
 Learn:

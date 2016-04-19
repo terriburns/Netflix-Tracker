@@ -2,6 +2,8 @@
 
 Webapp that keeps track of how much of your life is spent on Netflix.
 
+To run: `node app.js`
+
 Learn:
 
 - What percentage of your time on Netflix is watching which specific shows.

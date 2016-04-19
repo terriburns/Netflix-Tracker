@@ -6,13 +6,14 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Show = mongoose.model('Show');
 var User = mongoose.model('User');
+var total = 0;
 
 //bodyParser
 app.use(bodyParser.urlencoded({
   extended: false
 }));
 
- //set up handlebars
+//set up handlebars
 app.set('view engine', 'hbs');
 
 //landing page
@@ -58,18 +59,25 @@ app.get('/shows/add', function(req, res){
   res.render('add');
 });
 app.post('/shows/add', function(req, res){
-  var total = 0;
-  for(var i=0; i < 'shows'.length; i++){
-    //NEED TO SPECIFY THE REQUEST FOR EACH INDIVIDUAL SHOW
-    total += (req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength);
-  }
-  //times spent watching current show
+  total += (req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength);
   var totalForCurrentShow = req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength;
+  console.log("totalForCurrentShow: " + totalForCurrentShow);
+  console.log("total: "+ total);
   var num = (totalForCurrentShow/total) * 100;
+  console.log("totalForCurrentShow/total: " + totalForCurrentShow/total);
   var show = req.body.showTitle;
   var seasons = req.body.seasonNumber;
   var episodes = req.body.episodeNumber;
   var length = req.body.episodeLength;
+
+  /*TODO:
+  //iterate through all shows and update the percentages, which change once a new show is added
+  for(var i=0; i < 'shows'.length; i++){
+    show[i].totalForCurrentShow = show[i].body.seasonNumber + show[i].body.episodeNumber + show[i].episodeLength;
+    show[i].num = show[i].totalForCurrentShow/total;
+  }
+  */
+  //add a new show to the mongo database 
   var newShow = new Show({
     title: show,
     totalNumberOfSeasonsWatched: seasons,

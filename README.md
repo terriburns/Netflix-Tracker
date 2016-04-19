@@ -1,6 +1,6 @@
 #Netflix-Tracker
 
-Keep track of how much of your life is spent on Netflix.
+Webapp that keeps track of how much of your life is spent on Netflix.
 
 Learn:
 

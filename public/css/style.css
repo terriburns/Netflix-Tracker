@@ -1,6 +1,6 @@
 .btn,
 input[type=submit] {
-  background-color: red;
+  background-color: #CB3625;
   border: none;
   display: block;
   font-family: 'Lato';
@@ -13,18 +13,26 @@ input[type=submit] {
 .btn:hover {
   background: white;
 }
+.name {
+  color: #51D897;
+  display: inline;
+}
+.title {
+  color: #48C3BE;
+  display: inline;
+}
 a {
-  color: red;
+  color: #CB3625;
   text-decoration: underline;
 }
 a:hover {
-  color: red;
+  color: #CB3625;
 }
 body {
   background-color: black;
 }
 h1 {
-  color: red;
+  color: #CB3625;
   font-family: 'Lato';
   font-size: 80px;
   font-weight: 200;
@@ -34,8 +42,8 @@ h1 {
 h2 {
   color: white;
   font-family: 'Lato';
-  font-size: 22px;
-  line-height: 50px;
+  font-size: 20px;
+  line-height: 40px;
   text-align: center;
 }
 h3 {
@@ -47,11 +55,11 @@ h3 {
 h4 {
   color: yellow;
   font-family: 'Lato';
-  font-size: 30px;
+  font-size: 25px;
   text-align: center;
 }
 input[type=text] {
-  background-color: red;
+  background-color: #CB3625;
   border: none;
   display: inline;
   font-family: 'Lato';
@@ -63,8 +71,7 @@ input[type=text] {
 footer {
   color: white;
   font-family: 'Lato';
-  font-size: 18px;
+  font-size: 17px;
   height: 100px;
   text-align: center;
-  width: 100%;
 }

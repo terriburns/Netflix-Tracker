@@ -11,9 +11,14 @@
     <h1>
       NETFLIX TRACKER 
     </h1>
+    <h4>
+    {{#if user}}
+    Logged in as {{user.username}}
+    {{/if}}
+    </h4>
     {{{body}}}
     <footer>
-      Created by <a href="http://twitter.com/tcburning">@tcburning</a>, while watching Netflix. Click <a href="/">here</a> to go back home.
+      Created by <a href="http://twitter.com/tcburning">@tcburning</a>, while watching Netflix. Click <a href="/">here</a> to go back home and <a href="#">here</a> to logout.
     </footer>
   </body>
 </html>

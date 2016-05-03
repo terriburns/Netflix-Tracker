@@ -1,7 +1,9 @@
-<form method = "GET" action = "/shows" align="center">
+<h4>{{message}}</h4>
+<form method = "POST" action = "/login" align="center">
   <h2>
-    NAME: <input type="text" name="name"><br>
-    PASSWORD: <input type="text" name="password">
+    NAME: <input type="text" name="username"><br>
+    PASSWORD: <input type="text" name="password"><br>
+    BIRTHDAY (SIX DIGITS): <input type="text" name="birthday">
+    <input type="submit" value="login">
   </h2>
-  <input type="submit" name = "filter">
 </form>

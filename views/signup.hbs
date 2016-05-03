@@ -1,8 +1,9 @@
-<form method = "GET" action = "/shows" align="center">
+<h4>{{message}}</h4>
+<form method = "POST" action = "/signup" align="center">
   <h2>
-    ENTER NAME: <input type="text" name="name"><br>
+    ENTER NAME: <input type="text" name="username"><br>
     ENTER NEW PASSWORD: <input type="text" name="password"><br>
-    ENTER BIRTHDAY: <input type="text" name="birthday"><br>
+    ENTER BIRTHDAY (SIX DIGITS): <input type="text" name="birthday">
+    <input type="submit" value="signup">
   </h2>
-  <input type="submit" name = "filter">
 </form>

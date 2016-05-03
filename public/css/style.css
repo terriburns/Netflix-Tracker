@@ -44,6 +44,12 @@ h3 {
   font-size: 30px;
   text-align: center;
 }
+h4 {
+  color: yellow;
+  font-family: 'Lato';
+  font-size: 30px;
+  text-align: center;
+}
 input[type=text] {
   background-color: red;
   border: none;
@@ -59,6 +65,6 @@ footer {
   font-family: 'Lato';
   font-size: 18px;
   height: 100px;
-  text-align:center;
+  text-align: center;
   width: 100%;
 }

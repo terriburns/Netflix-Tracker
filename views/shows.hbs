@@ -1,19 +1,20 @@
-<h3>
-  <u>
-    Hello {{user.username}}! Here are your show stats:
-  </u>
-</h3>
-
+<h2>
+    Hello <div class="name">{{user.username}}</div>! Your show stats are below. To update or add shows, scroll down:
+</h2>
+{{#if shows}}
+{{else}}
+<h2>
+  You haven't added a show yet! Click below to add your first show.
+</h2>
+{{/if}}
 {{#each shows}}
   <h3>
-    {{title}}
-    ----------------------------
+    <div class="title">{{title}}</div>
   </h3>
   <h2>
     Percentage of your life spent on Netflix: {{lifeNetflixPercentage}}<br>
     Percentage of your life spent watching: {{lifePercentage}} <br>
-    Percentage of your time on Netflix spent watching <u>{{title}}</u>: {{netflixPercentage}}%<br>
+    Percentage of your time on Netflix spent watching <div class="title">{{title}}</div>: {{netflixPercentage}}%<br>
   </h2>
 {{/each}}
-
 <button class="btn" type="button" name="signup" value ="" onclick="window.location.href='/shows/add'">A D D   S H O W</button>

@@ -13,7 +13,6 @@ var Show = mongoose.model('Show');
 var User = mongoose.model('User');
 
 var app = express();
-var total = 0;
 
 //session support so that a user can remain logged in
 var session = require('express-session');

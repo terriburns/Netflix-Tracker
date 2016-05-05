@@ -17,6 +17,9 @@ input[type=submit] {
   color: #51D897;
   display: inline;
 }
+.subtitle {
+  color: #C1B0DB;
+}
 .title {
   color: #48C3BE;
   display: inline;
@@ -41,10 +44,11 @@ h1 {
 }
 h2 {
   color: white;
-  font-family: 'Lato';
+  font-family: 'Roboto';
   font-size: 20px;
   line-height: 40px;
   text-align: center;
+  word-spacing: 3px;
 }
 h3 {
   color: white;
@@ -54,9 +58,10 @@ h3 {
 }
 h4 {
   color: yellow;
-  font-family: 'Lato';
+  font-family: 'Roboto';
   font-size: 25px;
   text-align: center;
+  word-spacing: 3px;
 }
 input[type=text] {
   background-color: #CB3625;
@@ -68,10 +73,21 @@ input[type=text] {
   margin: 0 auto;
   text-align: center;
 }
+input[type=password] {
+  background-color: #CB3625;
+  border: none;
+  display: inline;
+  font-family: 'Lato';
+  font-size: 12px;
+  height: 25px;
+  margin: 0 auto;
+  text-align: center;
+}
 footer {
   color: white;
-  font-family: 'Lato';
-  font-size: 17px;
-  height: 100px;
+  font-family: 'Roboto';
+  font-size: 15px;
+  margin-top: 150px;
   text-align: center;
+  word-spacing: 5px;
 }

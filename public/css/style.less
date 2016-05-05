@@ -1,6 +1,7 @@
 @reddish: #CB3625;
 @blueish: #48C3BE;
 @greenish: #51D897;
+@purpleish: #C1B0DB;
 
 .btn, input[type=submit]  {
   background-color:@reddish;
@@ -23,6 +24,9 @@
   display:inline;
 }
 
+.subtitle {
+  color:@purpleish; 
+}
 .title{
   color:@blueish;
   display:inline;
@@ -52,10 +56,11 @@ h1 {
 
 h2 {
   color:white;
-  font-family: 'Lato';
+  font-family: 'Roboto';
   font-size:20px;
   line-height:40px;
   text-align:center;
+  word-spacing:3px;
 }
 
 h3 {
@@ -67,11 +72,22 @@ h3 {
 
 h4 {
   color:yellow;
-  font-family: 'Lato';
+  font-family: 'Roboto';
   font-size:25px;
   text-align:center;
+  word-spacing:3px;
 }
 input[type=text]{
+  background-color:@reddish;
+  border:none;
+  display: inline;
+  font-family: 'Lato';
+  font-size:12px;
+  height: 25px;
+  margin: 0 auto;
+  text-align:center;
+}
+input[type=password]{
   background-color:@reddish;
   border:none;
   display: inline;
@@ -84,8 +100,9 @@ input[type=text]{
 
 footer {
   color: white;
-  font-family: 'Lato';
-  font-size: 17px;
-  height: 100px;
+  font-family: 'Roboto';
+  font-size: 15px;
+  margin-top: 150px;
   text-align:center;
+  word-spacing:5px;
 }

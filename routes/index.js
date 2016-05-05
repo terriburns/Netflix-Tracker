@@ -5,9 +5,11 @@ var express = require('express'),
   User = mongoose.model('User'),
   Show = mongoose.model('Show');
 
-var total = 0;
-var counter = 0;
+var totalForCurrentShow = 0;
+var total = 0; //total amount of time spent watching netflix
+var haveAddedShow = false;
 var loggedIn = false;
+var minutesAlive = 1000000; //the number of days a user has lived
 
 //landing page
 router.get('/', function(req, res){
@@ -19,17 +21,17 @@ router.get('/signup', function(req, res){
   res.render('signup');
 });
 router.post('/signup', function(req, res){
-User.register(new User({username:req.body.username}),
-      req.body.password, function(err, user){
-    if (err) {
-      res.render('signup',{message:'Your registration information is not valid!'});
-    } else {
-      //if user signs in successfully, automatically signed in
-      passport.authenticate('local')(req, res, function() {
-        res.redirect('/shows');
-      });
-    }
-  });
+  User.register(new User({username:req.body.username}),
+                req.body.password, function(err, user){
+                  if (err) {
+                    res.render('signup',{message:'Your registration information is not valid!'});
+                  } else {
+                    //if user signs in successfully, automatically signed in
+                    passport.authenticate('local')(req, res, function() {
+                      res.redirect('/shows');
+                    });
+                  }
+                });
 });
 
 //if the user goes to login
@@ -49,17 +51,40 @@ router.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
+//logout
+router.get('/logout', function(req, res) {
+  req.logOut();
+  res.redirect('/');
+});
+
 //see the shows + data & route handler that calls Show.find
 router.get('/shows', function(req, res){
-  if (loggedIn){
+  //if logged in, but have no shows
+  if (loggedIn && haveAddedShow === false){
+    console.log("user has logged in but NOT added a show");
     Show.find(function(err, shows, count){
-    res.render('shows', {shows: shows});
-  });
+      res.render('shows', {shows: shows});
+    });
   }
+  //if logged in and have added a show
+  else if (loggedIn && haveAddedShow){
+    console.log("user is logged in and has already added a show");
+    console.log("total: " + total);
+    console.log("totalForCurrentShow: " + totalForCurrentShow);
+    var percentage = (total/minutesAlive);
+    var woo = (totalForCurrentShow/total) * 100;
+    console.log("percentage: " + percentage);
+    console.log("woo: " + woo);
+    Show.find(function(err, shows, count){
+      res.render('shows', {shows: shows, lifeNetflixPercentage: percentage, netflixPerc: woo});
+    });
+  }
+  //if not logged in
   else {
-      res.render('login', {message:'You must log in first to see your show stats!'});
+    res.render('login', {message:'You must log in first to see your show stats!'});
   }
 });
+
 //add a new show, store info, redirect to shows page
 router.get('/shows/add', function(req, res){
   if (loggedIn){
@@ -70,9 +95,8 @@ router.get('/shows/add', function(req, res){
   }
 });
 router.post('/shows/add', function(req, res){
-  counter++;
   total += (req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength);
-  var totalForCurrentShow = req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength;
+  totalForCurrentShow = req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength;
   console.log("totalForCurrentShow: " + totalForCurrentShow);
   console.log("total: "+ total);
   var num = (totalForCurrentShow/total) * 100;
@@ -81,14 +105,7 @@ router.post('/shows/add', function(req, res){
   var seasons = req.body.seasonNumber;
   var episodes = req.body.episodeNumber;
   var length = req.body.episodeLength;
-  /*after the first show is added, for each additional show, iterate through all previously existing shows
-   * and update their values based on the incoming new addition*/
-  if(counter !=1){
-    var query = { netflixPercentage: num };
-    var updateNum = num; //to be clear that the value of num is updating
-    console.log(updateNum);
-    Show.update(query, { $set: { netflixCounter: updateNum }}, function(err, shows){});
-  }
+  haveAddedShow = true;
   //add a new show to the mongo database 
   var newShow = new Show({
     title: show,

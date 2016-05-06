@@ -17,6 +17,10 @@ input[type=submit] {
   color: #51D897;
   display: inline;
 }
+.percentage {
+  color: yellow;
+  display: inline;
+}
 .subtitle {
   color: #C1B0DB;
 }
@@ -31,8 +35,15 @@ a {
 a:hover {
   color: #CB3625;
 }
+/*body background is black, unless the viz class selector is present, in which case we are on the viz page, so the background is white and the footer text should be changed to black*/
 body {
   background-color: black;
+}
+body.viz {
+  background-color: white;
+}
+body.viz footer {
+  color: black;
 }
 h1 {
   color: #CB3625;
@@ -60,6 +71,22 @@ h4 {
   color: yellow;
   font-family: 'Roboto';
   font-size: 25px;
+  text-align: center;
+  word-spacing: 3px;
+}
+h5 {
+  color: white;
+  font-family: 'Roboto';
+  font-size: 17px;
+  line-height: 0px;
+  text-align: center;
+  word-spacing: 3px;
+}
+h6 {
+  color: black;
+  font-family: 'Roboto';
+  font-size: 20px;
+  line-height: 40px;
   text-align: center;
   word-spacing: 3px;
 }

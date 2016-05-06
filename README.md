@@ -54,10 +54,8 @@ This webapp is build for NYU's [Applied Internet Technology course](http://foure
 
 - (3 points) Integrate user authentication
 
-- (1 point) using grunt
-
 - (1 points) using a CSS preprocesser (LESS)
 
-- (1 point) Concatenation and minification of CSS and JavaScript files
+- (2 point) Per external API used --> Google Charts
 
 ...for 6 points total

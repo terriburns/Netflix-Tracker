@@ -6,6 +6,7 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var logger = require('morgan');
+var passportLocalMongoose = require('passport-local-mongoose');
 var cookieParser = require('cookie-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');

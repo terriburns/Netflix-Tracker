@@ -7,9 +7,7 @@ var express = require('express'),
 
 var currentTotal = 0;
 var total = 0; //total amount of time spent watching netflix
-var haveAddedShow = false;
 var loggedIn = false;
-var userSpecifcShows;
 
 //landing page
 router.get('/', function(req, res){
@@ -41,7 +39,6 @@ router.get('/login', function(req, res){
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err,user) {
     if(user) {
-      console.log("USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR: " + user);
       loggedIn = true;
       req.logIn(user, function(err) {
         res.redirect('/shows');
@@ -102,7 +99,6 @@ router.post('/shows/add', function(req, res){
   var minutesAlive = minsAlive(req.user.birthday);
   total += (parseInt(req.body.seasonNumber) + parseInt(req.body.episodeNumber) + parseInt(req.body.episodeLength));
   currentTotal = parseInt(req.body.seasonNumber) + parseInt(req.body.episodeNumber) + parseInt(req.body.episodeLength);
-  haveAddedShow = true;
   var newShow = req.user;
   newShow.shows.push({
     title: req.body.showTitle,
@@ -124,11 +120,22 @@ router.post('/shows/add', function(req, res){
 });
 
 router.get('/update', function(req, res){
-  Show.find({title: req.query.showTitle}, function(err, shows, count){
-    var status= "Update your info for " + req.body.showTitle + "below:"; 
-    res.render('shows', {shows: shows, status:status});
+  var status= "Update your info for " + req.body.showTitle + "below:"; 
+  res.render('shows', {shows: shows, status:status});
+});
+router.post('/update', function(req, res){
+  User.findOne({title:req.user.shows.title}, function(err, updatedShow, count) {
+    if (!err) {
+      updatedShow.totalSeasons = req.body.seasonNumber;
+      updatedShow.totalEpisodes = req.body.episodeNumber;
+      updatedShow.epLength = req.body.episodeLength;
+      updatedShow.save(function(saveErr, updatedUser, saveCount) {
+        res.redirect('/shows');
+      });
+    } else {
+      res.redirect('/update');
+    }
   });
-  res.render('update');
 });
 
 //visualize page

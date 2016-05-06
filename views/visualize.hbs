@@ -2,7 +2,12 @@
   <h6>
     <div class="name">{{user.username}}</div>, here's a visualization of your Netflix usage. Looks like you're a big fan of {{whatever}}:
   </h6>
+  {{#each user.shows}}
+  <div id="showLALA">{{title}}</div>
+  <div id="statLALA">{{netflixPercentage}}</div>
+  {{/each}}
+  <!--add the netflix perentage for each show to the array that renders the visualization-->
   <div align="center">
-    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    <div id="piechart" align="center"</div>
   </div>
 </body>

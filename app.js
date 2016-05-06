@@ -10,6 +10,7 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var cookieParser = require('cookie-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+//var js = require('./public/js/visualize');
 var Show = mongoose.model('Show');
 var User = mongoose.model('User');
 

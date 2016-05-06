@@ -5,11 +5,11 @@ var express = require('express'),
   User = mongoose.model('User'),
   Show = mongoose.model('Show');
 
-var totalForCurrentShow = 0;
+var currentTotal = 0;
 var total = 0; //total amount of time spent watching netflix
 var haveAddedShow = false;
 var loggedIn = false;
-//var minutesAlive; //the number of days a user has lived
+var userSpecifcShows;
 
 //landing page
 router.get('/', function(req, res){
@@ -21,7 +21,7 @@ router.get('/signup', function(req, res){
   res.render('signup');
 });
 router.post('/signup', function(req, res){
-  User.register(new User({username:req.body.username}), req.body.password, function(err, user){
+  User.register(new User({username:req.body.username, birthday:req.body.birthday}), req.body.password, function(err, user){
     if (err) {
       res.render('signup',{message:'Your registration information is not valid!'});
     } else {
@@ -41,22 +41,8 @@ router.get('/login', function(req, res){
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err,user) {
     if(user) {
+      console.log("USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR: " + user);
       loggedIn = true;
-      function minutesUserAlive(){
-        //determine for how many minutes a user has been alive
-        var birthday = req.body.birthday;
-        var month = parseInt(birthday.substring(0, 2)) -1;
-        var day = parseInt(birthday.substring(2, 4));
-        var year = parseInt(birthday.substring(4, 8));
-        var oneDay = 24*60*60*1000;
-        var formattedBirthday = new Date(year, month, day);
-        var today = new Date();
-        formattedBirthday.setHours(0,0,0,0);
-        today.setHours(0,0,0,0);
-        var daysAlive = Math.round(Math.abs((formattedBirthday.getTime() - today.getTime())/(oneDay)));
-        var minutesAlive = daysAlive * 1440;
-        return minutesAlive;
-      }
       req.logIn(user, function(err) {
         res.redirect('/shows');
       });
@@ -74,33 +60,31 @@ router.get('/logout', function(req, res) {
 
 //see the shows + data & route handler that calls Show.find
 router.get('/shows', function(req, res){
-  //if logged in, but have no shows
-  if (loggedIn && haveAddedShow === false){
-    console.log("user has logged in but NOT added a show");
-    Show.find(function(err, shows, count){
-      res.render('shows', {shows: shows});
-    });
+  try{
+    //determine for how many minutes a user has been alive
+    var minutesAlive = minsAlive(req.user.birthday);
+    //if logged in, but have no shows
+    if (loggedIn && req.user.shows.length === 0){
+      console.log("user has logged in but NOT added a show");
+      Show.find(function(err, shows, count){
+        res.render('shows', {shows: shows});
+      });
+    }
+    //if logged in and have added a show
+    else if (loggedIn && req.user.shows.length !== 0){
+      var percentage = ((total/minutesAlive)).toFixed(10);
+      var woo = (currentTotal/total) * 100;
+      Show.find(function(err, shows, count){
+        res.render('shows', {shows: shows, lifeNetflixPercentage: percentage});
+      });
+    }
+    //if not logged in
+    else {
+      res.render('login', {message:'You must log in first to see your show stats!'});
+    }
   }
-  //if logged in and have added a show
-  else if (loggedIn && haveAddedShow){
-    console.log("user is logged in and has already added a show");
-    console.log("total: " + total);
-    console.log("totalForCurrentShow: " + totalForCurrentShow);
-    var minutesAlive = minutesUserAlive();
-    var percentage = ((total/minutesAlive)).toFixed(6);
-    var woo = (totalForCurrentShow/total) * 100;
-    console.log("--------------------------");
-    console.log("minutesAlive: " + minutesAlive);
-    console.log("percentage: " + percentage);
-    console.log("woo: " + woo);
-    console.log("--------------------------");
-    Show.find(function(err, shows, count){
-      res.render('shows', {shows: shows, lifeNetflixPercentage: percentage});
-    });
-  }
-  //if not logged in
-  else {
-    res.render('login', {message:'You must log in first to see your show stats!'});
+  catch(e) {
+    res.render('login', {message:'Please log in again.'});
   }
 });
 
@@ -113,49 +97,37 @@ router.get('/shows/add', function(req, res){
     res.render('login', {message:'You must log in first to add a show!'});
   }
 });
+//add a new show to the mongo database
 router.post('/shows/add', function(req, res){
-  total += (req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength);
-  totalForCurrentShow = req.body.seasonNumber * req.body.episodeNumber * req.body.episodeLength;
-  console.log("totalForCurrentShow: " + totalForCurrentShow);
-  console.log("total: "+ total);
-  var num = ((totalForCurrentShow/total) * 100).toFixed(2);
-  var life = ((totalForCurrentShow/minutesAlive) * 100).toFixed(6);
-  console.log("totalForCurrentShow/total: " + totalForCurrentShow/total);
+  var minutesAlive = minsAlive(req.user.birthday);
+  total += (parseInt(req.body.seasonNumber) + parseInt(req.body.episodeNumber) + parseInt(req.body.episodeLength));
+  currentTotal = parseInt(req.body.seasonNumber) + parseInt(req.body.episodeNumber) + parseInt(req.body.episodeLength);
   haveAddedShow = true;
-  /*
-    Show.find({}, function(err, shows, count){
-     shows.totalNumberOfSeasonsWatched= req.body.seasonNumber;
-     shows.totalNumberOfEpisodesPerSeason= req.body.episodeNumber;
-     shows.averageLengthOfEpisode= req.body.episodeLength;
-     var pastTotal = update.totalNumberOfSeasonsWatched * update.totalNumberOfEpisodesPerSeason * update.averageLengthOfEpisode;
-     shows.netflixPercentage = (pastTotal/total);
-     shows.lifePercentage = (pastTotal/minutesAlive);
-     shows.save(function(saveErr, updatedUser, saveCount) {
-     res.redirect('/shows');
-     });
-     } else {
-     res.redirect('/shows');
-     }
-     });
-     */
-  //add a new show to the mongo database 
-  var newShow = new Show({
+  var newShow = req.user;
+  newShow.shows.push({
     title: req.body.showTitle,
-    totalNumberOfSeasonsWatched: req.body.seasonNumber,
-    totalNumberOfEpisodesPerSeason: req.body.episodeNumber,
-    averageLengthOfEpisode: req.body.episodeLength,
-    netflixPercentage: num,
-    lifePercentage: life
-  }).save(function(err, newentry, c){
+    totalSeasons: req.body.seasonNumber,
+    totalEpisodes: req.body.episodeNumber,
+    epLength: req.body.episodeLength,
+    netflixPercentage: ((currentTotal/total)*100).toFixed(2),
+    lifePercentage: ((currentTotal/minutesAlive) * 100).toFixed(6)
+  });
+  //UPDATE PREVIOUSLY EXISTING SHOWS, since total amount watched has updated
+  //NOTE --> WILL HAVE TO CHANGE LIFE PERCENTAGE IF UPDATE FUNCTIONALITY HAPPENS
+  for(var i=0; i < newShow.shows.length-1; i++){
+    var current = newShow.shows[i].totalSeasons + newShow.shows[i].totalEpisodes + newShow.shows[i].epLength;
+    newShow.shows[i].netflixPercentage = ((current/total) *100).toFixed(2);
+  }
+  newShow.save(function(err, newentry, c){
     res.redirect('/shows');
   });
 });
 
 router.get('/update', function(req, res){
-    Show.find({title: req.query.showTitle}, function(err, shows, count){
-      var status= "Ypdate your info for " + req.body.showTitle + "below:"; 
-      res.render('shows', {shows: shows, status:status});
-    });
+  Show.find({title: req.query.showTitle}, function(err, shows, count){
+    var status= "Update your info for " + req.body.showTitle + "below:"; 
+    res.render('shows', {shows: shows, status:status});
+  });
   res.render('update');
 });
 
@@ -164,4 +136,16 @@ router.get('/visualize', function(req, res){
   res.render('visualize');
 });
 
+function minsAlive(birthday){
+  var month = parseInt(birthday.substring(0, 2)) -1;
+  var day = parseInt(birthday.substring(2, 4));
+  var year = parseInt(birthday.substring(4, 8));
+  var oneDay = 24*60*60*1000;
+  var formattedBirthday = new Date(year, month, day);
+  var today = new Date();
+  formattedBirthday.setHours(0,0,0,0);
+  today.setHours(0,0,0,0);
+  var daysAlive = Math.round(Math.abs((formattedBirthday.getTime() - today.getTime())/(oneDay)));
+  return daysAlive * 1440;
+}
 module.exports = router;

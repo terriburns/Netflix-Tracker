@@ -1,19 +1,20 @@
 var mongoose = require('mongoose');
 var passportLocalMongoose = require('passport-local-mongoose');
 
-//schemas
 var Show = new mongoose.Schema({
   title: String,
-  totalNumberOfSeasonsWatched: Number,
-  totalNumberOfEpisodesPerSeason: Number,
-  averageLengthOfEpisode: Number,
-  netflixPercentage: Number
+  totalSeasons: Number,
+  totalEpisodes: Number,
+  epLength: Number,
+  netflixPercentage: Number,
+  lifePercentage: Number
 });
 
 var User = new mongoose.Schema({
   username: String,
   password: String,
-  birthday: String
+  birthday: String,
+  shows: [Show]
 });
 
 User.plugin(passportLocalMongoose);

@@ -51,16 +51,11 @@ Learn:
 - _want to have fun_: It's fun!
 
 #Grading
-- 5 route handers: 
+- 5 route handers (see `index.js`): `/shows`, `/shows/add`, `/visualize`, `/logout`, `/update`
 
-- 4 Mongoose Schemas (or other database abstraction library/module)
+- Mongoose Schemas (see `db.js`): `User`, `Show` 
 
-- 3 forms (do not count login/register gets and posts if you're implementing auth):
-..- Using JS (ajax): 
-
-...- Two
-
-...-Three
+- 3 forms (see `/views`): Using JS (ajax) `add.hbs`, `update.hbs`, 
 
 - Use at least 2 of any of the following (can be the same): Constructors, Object.create, Prototypes, map, reduce, filter, forEach
 

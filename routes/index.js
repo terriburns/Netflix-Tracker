@@ -6,7 +6,7 @@ var express = require('express'),
   Show = mongoose.model('Show');
 
 var currentTotal = 0;
-var total = 0; //total amount of time spent watching netflix
+var total; //total amount of time spent watching netflix
 var loggedIn = false;
 
 //landing page
@@ -19,7 +19,7 @@ router.get('/signup', function(req, res){
   res.render('signup');
 });
 router.post('/signup', function(req, res){
-  User.register(new User({username:req.body.username, birthday:req.body.birthday}), req.body.password, function(err, user){
+  User.register(new User({username:req.body.username, birthday:req.body.birthday, userTotal:'0'}), req.body.password, function(err, user){
     if (err) {
       res.render('signup',{message:'Your registration information is not valid!'});
     } else {
@@ -69,6 +69,7 @@ router.get('/shows', function(req, res){
     }
     //if logged in and have added a show
     else if (loggedIn && req.user.shows.length !== 0){
+      var total = req.user.userTotal;
       var percentage = ((total/minutesAlive)).toFixed(10);
       var woo = (currentTotal/total) * 100;
       Show.find(function(err, shows, count){
@@ -96,24 +97,35 @@ router.get('/shows/add', function(req, res){
 });
 //add a new show to the mongo database
 router.post('/shows/add', function(req, res){
-  var minutesAlive = minsAlive(req.user.birthday);
-  total += (parseInt(req.body.seasonNumber) + parseInt(req.body.episodeNumber) + parseInt(req.body.episodeLength));
-  currentTotal = parseInt(req.body.seasonNumber) + parseInt(req.body.episodeNumber) + parseInt(req.body.episodeLength);
   var newShow = req.user;
+  var minutesAlive = minsAlive(req.user.birthday);
+  newShow.userTotal += (parseInt(req.body.seasonNumber) + parseInt(req.body.episodeNumber) + parseInt(req.body.episodeLength));
+
+  //update the total for this particular user, so the value doesnt change when logout
+  console.log("-----!!--------------");
+  console.log(newShow);
+  console.log("OLD TOTAL" + newShow.userTotal);
+  console.log("USER TOTAL SHOUDL BE PDATED" + newShow.userTotal);
+  console.log("--------------------");
+  //amount watched for current show, not in total
+  currentTotal = parseInt(req.body.seasonNumber) + parseInt(req.body.episodeNumber) + parseInt(req.body.episodeLength);
   newShow.shows.push({
     title: req.body.showTitle,
     totalSeasons: req.body.seasonNumber,
     totalEpisodes: req.body.episodeNumber,
     epLength: req.body.episodeLength,
-    netflixPercentage: ((currentTotal/total)*100).toFixed(2),
+    netflixPercentage: ((currentTotal/newShow.userTotal)*100).toFixed(2),
     lifePercentage: ((currentTotal/minutesAlive) * 100).toFixed(6)
   });
   //UPDATE PREVIOUSLY EXISTING SHOWS, since total amount watched has updated
   //NOTE --> WILL HAVE TO CHANGE LIFE PERCENTAGE IF UPDATE FUNCTIONALITY HAPPENS
   for(var i=0; i < newShow.shows.length-1; i++){
+    //re-finding amount watched for current show, not in total
     var current = newShow.shows[i].totalSeasons + newShow.shows[i].totalEpisodes + newShow.shows[i].epLength;
-    newShow.shows[i].netflixPercentage = ((current/total) *100).toFixed(2);
+    //recalculate % over updated total
+    newShow.shows[i].netflixPercentage = ((current/newShow.userTotal) *100).toFixed(2);
   }
+  console.log(newShow.shows);
   newShow.save(function(err, newentry, c){
     res.redirect('/shows');
   });

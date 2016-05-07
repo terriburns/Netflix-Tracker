@@ -14,7 +14,13 @@ var User = new mongoose.Schema({
   username: String,
   password: String,
   birthday: String,
-  shows: [Show]
+  shows: [Show],
+  userTotal: Number
+});
+
+
+var Total = new mongoose.Schema({
+  totalValue: Number
 });
 
 User.plugin(passportLocalMongoose);

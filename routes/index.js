@@ -100,13 +100,6 @@ router.post('/shows/add', function(req, res){
   var newShow = req.user;
   var minutesAlive = minsAlive(req.user.birthday);
   newShow.userTotal += (parseInt(req.body.seasonNumber) + parseInt(req.body.episodeNumber) + parseInt(req.body.episodeLength));
-
-  //update the total for this particular user, so the value doesnt change when logout
-  console.log("-----!!--------------");
-  console.log(newShow);
-  console.log("OLD TOTAL" + newShow.userTotal);
-  console.log("USER TOTAL SHOUDL BE PDATED" + newShow.userTotal);
-  console.log("--------------------");
   //amount watched for current show, not in total
   currentTotal = parseInt(req.body.seasonNumber) + parseInt(req.body.episodeNumber) + parseInt(req.body.episodeLength);
   newShow.shows.push({

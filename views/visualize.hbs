@@ -1,7 +1,10 @@
 <body class="viz">
   <h6>
-    <div class="name">{{user.username}}</div>, here's a visualization of your Netflix usage. Looks like you're a big fan of {{whatever}}:
+    <div class="name">{{user.username}}</div>, here's a visualization of your Netflix usage. Care to <a href="/shows/add">add more shows</a>?
   </h6>
+  <h5>
+    Click <a href="/shows">here</a> to go back to shows.
+  </h5>
   {{#each user.shows}}
   <div id="showLALA">{{title}}</div>
   <div id="statLALA">{{netflixPercentage}}</div>

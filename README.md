@@ -55,7 +55,7 @@ Learn:
 
 - Mongoose Schemas (see `db.js`): `User`, `Show` 
 
-- 3 forms (see `/views`): Using JS (ajax) `add.hbs`, `update.hbs`, 
+- 3 forms (see `/views`): One form in `add.hbs` (which uses server-side validation), and two forms in `update.hbs`, 
 
 - Use at least 2 of any of the following (can be the same): Constructors, Object.create, Prototypes, map, reduce, filter, forEach
 

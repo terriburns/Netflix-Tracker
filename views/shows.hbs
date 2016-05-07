@@ -1,6 +1,6 @@
 {{#if user.shows}}
 <h2>
-  <div class="subtitle">Hello <div class="name">{{user.username}}</div>! <div class="percentage">{{lifeNetflixPercentage}}</div>% of your life has been spent watching Netflix. Congrats! <br>For more Netflix statistics, and to update/add shows, see below. To visualize, click <a href="visualize">here</a>.</div>
+  <div class="subtitle">Hello <div class="name">{{user.username}}</div>! <div class="percentage">{{lifeNetflixPercentage}}</div>% of your life has been spent watching Netflix. Congrats! <br>For more Netflix statistics, and to update/add shows, see below. To visualize, click <a href="/visualize">here</a>.</div>
 </h2>
 {{else}}
 <h2>
@@ -14,12 +14,11 @@
 <h3>
   <div class="title">{{title}}</div>
 </h3>
-<h5>
-  Click <a href="/update">here</a> to update your info for {{title}}
-</h5>
 <h2>
   Percentage of your life spent watching <div class="title">{{title}}</div>: <div class="percentage">{{lifePercentage}}</div>%<br>
   Percentage of your time on Netflix spent watching <div class="title">{{title}}</div>: <div class="percentage">{{netflixPercentage}}</div>% <br>
 </h2>
 {{/each}}
-<button class="btn" type="button" name="signup" value ="" onclick="window.location.href='/shows/add'">A D D   S H O W</button>
+<button class="btn" type="button" name="signup" value ="" onclick="window.location.href='/shows/add'">A D D   S H O W</button><br><br>
+<button class="btn" type="button" name="signup" value ="" onclick="window.location.href='/update'">U P D A T E S H O W</button><br><br>
+<button class="btn" type="button" name="signup" value ="" onclick="window.location.href='/remove'">R E M O V E S H O W</button>

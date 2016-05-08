@@ -1,10 +1,17 @@
-<h2>Watch some more Netflix? Go ahead and update any of the information below:</h2>
+<h4>
+  {{#if err}}
+  {{#each err.errors}}
+  {{message}}<br>
+  {{/each}}
+  {{/if}}
+</h4>
+<h2>Watch some more Netflix? Go ahead and update all of the information for any show below:</h2>
 <form method = "POST" action = "/update" align="center">
   <h2>
     * SHOW TITLE: <input type="text" name ="showTitle"><br>
-    TOTAL NUMBER OF SEASONS WATCHED: <input type="text" name="seasonNumber"><br>
-    NUMBER OF EPISODES PER SEASON: <input type="text" name="episodeNumber"><br>
-    AVERAGE LENGTH OF EPISODE (usually either 21 or 43 minutes): <input type="text" name="episodeLength"><br>
+    * TOTAL NUMBER OF SEASONS WATCHED: <input type="text" name="seasonNumber"><br>
+    * NUMBER OF EPISODES PER SEASON: <input type="text" name="episodeNumber"><br>
+    * AVERAGE LENGTH OF EPISODE (usually either 21 or 43 minutes): <input type="text" name="episodeLength"><br>
   </h2>
   <input class="btn" type="submit" name = "filter">
 </form>

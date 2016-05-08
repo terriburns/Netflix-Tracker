@@ -30,7 +30,6 @@ function main(){
       fontName: 'Roboto',
       legend:'left',
       colors: ['#9C0712', '#EF2030', '#EE3C4A', '#EF737C', '#EF8A91', '#F0ADB2', '#9E3038'],
-      sliceVisibilityThreshold:0.1,
       pieHole: 0.4,
       pieSliceTextStyle: {
         color: 'black',
@@ -39,4 +38,8 @@ function main(){
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
     chart.draw(data, options);
   }
+}
+
+function deletelol(value){
+  delete value;
 }

@@ -58,20 +58,17 @@ router.get('/logout', function(req, res) {
 //see the shows + data & route handler that calls Show.find
 router.get('/shows', function(req, res){
   try{
-    //determine for how many minutes a user has been alive
-    var minutesAlive = minsAlive(req.user.birthday);
     //if logged in, but have no shows
     if (loggedIn && req.user.shows.length === 0){
-      console.log("user has logged in but NOT added a show");
       Show.find(function(err, shows, count){
         res.render('shows', {shows: shows});
       });
     }
     //if logged in and have added a show
     else if (loggedIn && req.user.shows.length !== 0){
-      var total = req.user.userTotal;
-      var percentage = ((total/minutesAlive)).toFixed(10);
-      var woo = (currentTotal/total) * 100;
+      //determine for how many minutes a user has been alive
+      var minutesAlive = minsAlive(req.user.birthday);
+      var percentage = ((req.user.userTotal/minutesAlive)*100).toFixed(10);
       Show.find(function(err, shows, count){
         res.render('shows', {shows: shows, lifeNetflixPercentage: percentage});
       });
@@ -123,14 +120,13 @@ router.post('/shows/add', function(req, res){
     console.log(newShow.shows);
     newShow.save(function(err){
       if(err){
-        console.log("it got here");
         //remove that show if it had errors
         var lastShowAdded = (newShow.shows.length) -1;
         newShow.shows[lastShowAdded].remove();
         console.log(newShow.shows);
         res.render('add', {err:err});
       }else{
-        res.render('shows');
+        res.redirect('/shows');
       }
     });
   }
@@ -168,7 +164,7 @@ router.post('/remove', function(req, res){
       res.redirect('/shows');
     }
     else{
-      console.log("problem");
+      res.render('remove', {err:err});
     }
   });
 });
@@ -179,8 +175,15 @@ router.get('/update', function(req, res){
 });
 router.post('/update', function(req, res){
   var updateShow = req.user;
+  var minutesAlive = minsAlive(req.user.birthday);
+  var placeholder;
   for(var i=0; i < updateShow.shows.length; i++){
     if(updateShow.shows[i].title === req.body.showTitle){
+      //before the first step, store these values in temps in case update fails
+      var season = updateShow.shows[i].totalSeasons;
+      var number = updateShow.shows[i].totalEpisodes;
+      var length = updateShow.shows[i].epLength;
+      placeholder = i;
       //first, remove the amount of time this show contributed to "total"
       var removeAmount = (updateShow.shows[i].totalSeasons * updateShow.shows[i].totalEpisodes * updateShow.shows[i].epLength);
       updateShow.userTotal -=removeAmount;
@@ -196,10 +199,11 @@ router.post('/update', function(req, res){
         updateShow.shows[i].epLength = req.body.episodeLength;
       }
 
-      //then, recalculate the total and netflixPercentage
+      //then, recalculate the total and netflixPercentage and life percentage
       var addAmount = (updateShow.shows[i].totalSeasons * updateShow.shows[i].totalEpisodes * updateShow.shows[i].epLength); //these values have updated
       updateShow.userTotal += addAmount;
       updateShow.shows[i].netflixPercentage = ((addAmount/updateShow.userTotal) *100).toFixed(2); //recalculate % over updated total
+      updateShow.shows[i].lifePercentage= ((addAmount/minutesAlive) * 100).toFixed(6);
     }
   }
   //finally, update the values for all the other shows with the newly updated total
@@ -215,7 +219,11 @@ router.post('/update', function(req, res){
       res.redirect('/shows');
     }
     else{
-      console.log("problem");
+      //if theres an error, makes sure the update fails
+      updateShow.shows[placeholder].totalSeasons = season;
+      updateShow.shows[placeholder].totalEpisodes =  number;
+      updateShow.shows[placeholder].epLength = length;
+      res.render('update', {err:err});
     }
   });
 });

@@ -92,13 +92,13 @@ router.get('/shows/add', function(req, res){
     res.render('login', {message:'You must log in first to add a show!'});
   }
 });
+
 //add a new show to the mongo database
 router.post('/shows/add', function(req, res){
   var newShow = req.user;
   if (newShow !== undefined) {
     var minutesAlive = minsAlive(req.user.birthday);
     newShow.userTotal += (parseInt(req.body.seasonNumber) * parseInt(req.body.episodeNumber) * parseInt(req.body.episodeLength));
-    console.log("/shows/add total: " + newShow.userTotal);
     //amount watched for current show, not in total
     currentTotal = parseInt(req.body.seasonNumber) * parseInt(req.body.episodeNumber) * parseInt(req.body.episodeLength);
     newShow.shows.push({
@@ -109,13 +109,10 @@ router.post('/shows/add', function(req, res){
       netflixPercentage: ((currentTotal/newShow.userTotal)*100).toFixed(2),
       lifePercentage: ((currentTotal/minutesAlive) * 100).toFixed(6)
     });
-    //UPDATE PREVIOUSLY EXISTING SHOWS, since total amount watched has updated
+    //upate info for previous shows since total amount watched has updated
     for(var i=0; i < newShow.shows.length-1; i++){
-      //re-finding amount watched for current show, not in total
-      var current = newShow.shows[i].totalSeasons * newShow.shows[i].totalEpisodes * newShow.shows[i].epLength;
-      //recalculate % over updated total
-      console.log(current);
-      newShow.shows[i].netflixPercentage = ((current/newShow.userTotal) *100).toFixed(2);
+      var current = newShow.shows[i].totalSeasons * newShow.shows[i].totalEpisodes * newShow.shows[i].epLength; //refind current for show
+      newShow.shows[i].netflixPercentage = ((current/newShow.userTotal) *100).toFixed(2);//recalculate % over updated total
     }
     console.log(newShow.shows);
     newShow.save(function(err){
@@ -141,7 +138,6 @@ router.get('/remove', function(req, res){
 });
 router.post('/remove', function(req, res){
   var updateShow = req.user;
-  console.log("user: " + updateShow);
   //if the user opted to delete a show, locate and remove the requested show
   for(var i=0; i < updateShow.shows.length; i++){
     if(updateShow.shows[i].title === req.body.removeShow){
@@ -215,7 +211,6 @@ router.post('/update', function(req, res){
   }
   updateShow.save(function(err){
     if(!err){
-      console.log(updateShow.shows);
       res.redirect('/shows');
     }
     else{

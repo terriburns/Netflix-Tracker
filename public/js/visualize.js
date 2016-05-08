@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", main);
 
 var subList = [];
 var showData = [['Task', 'Percentage']];
+var saveShowData;
+var temp;
+
 
 function main(){
   google.charts.load('current', {'packages':['corechart']});
@@ -16,12 +19,61 @@ function main(){
       subList.push(stat);
       showData.push(subList);
       subList = [];
-      console.log("showdata: " + showData);
     }
     else {
       console.log("Info is null?");
     }
   }
+  //check the the values are at or near 100 for debugging!
+  function numbersOnly(value) {
+    value.splice(0, 1);
+    return value;
+  }
+
+  /*------------------------------------------------------------------------------------
+  DEEP COPY CODE FROM STACK OVERFLOW
+  http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
+  -------------------------------------------------------------------------------------*/
+  function clone(obj) {
+    var copy;
+    // Handle the 3 simple types, and null or undefined
+    if (null === obj || "object" !== typeof obj) return obj;
+    // Handle Date
+    if (obj instanceof Date) {
+      copy = new Date();
+      copy.setTime(obj.getTime());
+      return copy;
+    }
+    // Handle Array
+    if (obj instanceof Array) {
+      copy = [];
+      for (var i = 0, len = obj.length; i < len; i++) {
+        copy[i] = clone(obj[i]);
+      }
+      return copy;
+    }
+    // Handle Object
+    if (obj instanceof Object) {
+      copy = {};
+      for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+      }
+      return copy;
+    }
+    throw new Error("Unable to copy obj! Its type isn't supported.");
+  }
+  /*------------------------------------------------------------------------------------
+  (end) DEEP COPY CODE FROM STACK OVERFLOW
+  -------------------------------------------------------------------------------------*/
+  saveShowData = clone(showData).splice(1,showData.length);
+  console.log("showdata: " + showData);
+  console.log("saveShowData: " + saveShowData);
+  var filtered = saveShowData.filter(numbersOnly);
+  var total = filtered.reduce(function(a, b) {
+    return parseInt(a) + parseInt(b);
+  });
+  console.log("TOTAL: " + total);
+
   function drawChart() {
     var data = google.visualization.arrayToDataTable(showData);
     var options = {
@@ -38,8 +90,4 @@ function main(){
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
     chart.draw(data, options);
   }
-}
-
-function deletelol(value){
-  delete value;
 }

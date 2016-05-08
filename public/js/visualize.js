@@ -5,7 +5,6 @@ var showData = [['Task', 'Percentage']];
 var saveShowData;
 var temp;
 
-
 function main(){
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart);
@@ -31,9 +30,9 @@ function main(){
   }
 
   /*------------------------------------------------------------------------------------
-  DEEP COPY CODE FROM STACK OVERFLOW
-  http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
-  -------------------------------------------------------------------------------------*/
+    DEEP COPY CODE FROM STACK OVERFLOW
+http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
+-------------------------------------------------------------------------------------*/
   function clone(obj) {
     var copy;
     // Handle the 3 simple types, and null or undefined
@@ -63,11 +62,9 @@ function main(){
     throw new Error("Unable to copy obj! Its type isn't supported.");
   }
   /*------------------------------------------------------------------------------------
-  (end) DEEP COPY CODE FROM STACK OVERFLOW
-  -------------------------------------------------------------------------------------*/
+    (end) DEEP COPY CODE FROM STACK OVERFLOW
+    -------------------------------------------------------------------------------------*/
   saveShowData = clone(showData).splice(1,showData.length);
-  console.log("showdata: " + showData);
-  console.log("saveShowData: " + saveShowData);
   var filtered = saveShowData.filter(numbersOnly);
   var total = filtered.reduce(function(a, b) {
     return parseInt(a) + parseInt(b);
@@ -90,4 +87,21 @@ function main(){
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
     chart.draw(data, options);
   }
+}
+function listRandom() {
+  //random show suggestion
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function() {
+    if (request.readyState == 4 && request.status == 200) {
+      //add each of the shows to an array
+      var arrayOfShows = (request.responseText).split(',');
+      console.log(arrayOfShows);
+      //pick an index at random
+      var randomIndex = Math.floor(Math.random() * arrayOfShows.length);
+      console.log(randomIndex);
+      document.getElementById("random").innerHTML = "<h7>" + arrayOfShows[randomIndex] + "</h7>";
+    }
+  };
+  request.open("GET", "/js/shows.txt", true);
+  request.send();
 }

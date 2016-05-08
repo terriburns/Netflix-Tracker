@@ -42,12 +42,9 @@ body {
 body.viz {
   background-color: white;
 }
-body.viz footer {
-  color: black;
-}
+body.viz footer,
 body.viz h5 {
   color: black;
-  line-height: 0px;
 }
 h1 {
   color: #CB3625;
@@ -88,6 +85,14 @@ h5 {
 }
 h6 {
   color: black;
+  font-family: 'Roboto';
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+  word-spacing: 3px;
+}
+h7 {
+  color: #CB3625;
   font-family: 'Roboto';
   font-size: 20px;
   line-height: 40px;

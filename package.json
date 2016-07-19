@@ -2,8 +2,8 @@
   "name": "netflix-tracker",
   "version": "1.0.0",
   "engines": {
-    "node": "0.12.7"
-    "node": "3.10.5"
+    "node": "0.12.7",
+    "npm": "3.10.5"
   }
   "description": "Keep track of how much of your life you spend on Netflix",
   "main": "index.js",

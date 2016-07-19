@@ -80,5 +80,6 @@ app.use(function(err, req, res, next) {
 });
 
 //serve it up
-app.listen(3000);
-console.log("Server started on port 3000");
+var portNum = Number(process.env.PORT || 3000);
+app.listen(portNum);
+console.log("Server started on port process.env.PORT or 3000");

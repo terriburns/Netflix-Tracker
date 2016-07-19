@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/terriburns/Netflix-Tracker#readme",
   "dependencies": {
-    "mongoose": "^4.4.11"
+    "mongoose": "^4.4.11",
+    "passport-local-mongoose": "^3.10.5"
   }
 }

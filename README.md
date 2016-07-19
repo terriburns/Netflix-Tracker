@@ -32,32 +32,7 @@ Learn:
 
 #Data Model
 
-- See 'db.js' --> MongoDB stores information per-user session 
-
-#Wireframes
-
-![](public/imgs/screenshot.png)
-
-#Site Map 
-
-![](public/imgs/wireframe.JPG)
-
-#Use Cases (Netflix user who...)
-
-- _spend a lot of time on Netflix_: People who are interested in knowing how much of their life is spent watching Netflix. Later iterations of the probject can look at daily/weekly/monthly/yearly intervals. The point here is ultimately to contextualize just how much time is spent watching Netflix, relative to the rest of your life.
-
-- _want to better understand their watching patters_: People who are interested in knowing how much they spend watching certain shows in comparison to others.  Netflix recommends shows based on the type of shows you've watched in the past, but there isn't a lot of clear evaluation of how much time you spend watching one show vs another.
-
-- _want to have fun_: It's fun!
-
-#Grading
-- 5 route handers (see `index.js`): `/shows`, `/shows/add`, `/visualize`, `/logout`, `/update`
-
-- Mongoose Schemas (see `db.js`): `User`, `Show` 
-
-- 3 forms (see `/views`): One form in `add.hbs` (which uses server-side validation), and two forms in `update.hbs`, 
-
-- Use at least 2 of any of the following (can be the same): Constructors, Object.create, Prototypes, map, reduce, filter, forEach
+- See `db.js` --> MongoDB stores information per-user session 
 
 #Research Topics
 
@@ -70,6 +45,17 @@ This webapp is build for NYU's [Applied Internet Technology course](http://foure
 - (2 point) Per external API used --> Google Charts
 
 ...for 6 points total
+
+#Grading
+
+- 5 route handers (see `index.js`): `/shows`, `/shows/add`, `/visualize`, `/logout`, `/update`
+
+- Mongoose Schemas (see `db.js`): `User`, `Show` 
+
+- 3 forms (see `/views`): One form in `add.hbs` (which uses server-side validation), and two forms in `update.hbs`, 
+
+- Use at least 2 of any of the following (can be the same): Constructors, Object.create, Prototypes, map, reduce, filter, forEach
+
 
 #Tips
 

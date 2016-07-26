@@ -2,7 +2,11 @@
 
 Webapp that keeps track of how much of your life is spent on Netflix.
 
-To run: `node app.js`
+To run: 
+
+- make sure that mongo is running (`mongod`)
+
+- `node app.js`
 
 Learn:
 

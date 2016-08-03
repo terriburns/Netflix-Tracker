@@ -37,4 +37,4 @@ User.plugin(passportLocalMongoose);
 
 mongoose.model('Show', Show);
 mongoose.model('User', User);
-mongoose.connect('mongodb://localhost/netflix');
+mongoose.connect(process.env.ORMONGO_URL || 'mongodb://localhost/netflix');
